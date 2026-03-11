@@ -13,6 +13,14 @@ export default function PlayerInput() {
     }
   };
 
+  const handleInputFocus = (e) => {
+    if (window.innerWidth <= 768 && e.target) {
+      setTimeout(() => {
+        e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 300);
+    }
+  };
+
   return (
     <div className="glass-panel animate-fade-in" style={{ padding: '40px', width: '100%', maxWidth: '600px' }}>
       <h2 style={{ marginBottom: '16px', textAlign: 'center' }}>Add Participants</h2>
@@ -27,6 +35,7 @@ export default function PlayerInput() {
           placeholder="Player Name" 
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
+          onFocus={handleInputFocus}
           autoFocus
         />
         <button type="submit" className="glass-button primary" disabled={!inputValue.trim()}>

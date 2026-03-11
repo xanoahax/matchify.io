@@ -87,6 +87,14 @@ export default function TeamManager() {
     }
   };
 
+  const handleInputFocus = (e) => {
+    if (window.innerWidth <= 768 && e.target) {
+      setTimeout(() => {
+        e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 300);
+    }
+  };
+
   return (
     <div className="glass-panel animate-fade-in" style={{ padding: '40px', width: '100%', maxWidth: '800px' }}>
       <h2 style={{ marginBottom: '16px', textAlign: 'center' }}>Form Teams</h2>
@@ -184,6 +192,7 @@ export default function TeamManager() {
                 value={team.name}
                 placeholder={team.players.map(p => p.name).join(', ') || 'Team Name'}
                 onChange={(e) => updateTeamName(team.id, e.target.value)}
+                onFocus={handleInputFocus}
                 style={{ flex: 1, padding: '8px', fontWeight: 'bold' }}
               />
             </div>
