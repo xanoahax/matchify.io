@@ -15,15 +15,15 @@ export function TournamentProvider({ children }) {
   const [bracket, setBracket] = useLocalStorage('matchify_bracket', null);
   const [history, setHistory] = useLocalStorage('matchify_history', []);
   
-  // Stages: 'MAIN_MENU' -> 'SETUP_NAME' -> 'SETUP_PLAYERS' -> 'SETUP_TEAMS' -> 'BRACKET' -> 'CELEBRATION'
+  // Stages: 'MAIN_MENU' -> 'SETUP_PLAYERS' -> 'SETUP_TEAMS' -> 'BRACKET' -> 'CELEBRATION'
   const [currentStage, setCurrentStage] = useState('MAIN_MENU');
   
   // On mount or when history loads, check if there's an existing tournament to restore or view history
   useEffect(() => {
-    if (tournamentName || players.length > 0 || bracket || history.length > 0) {
+    if (players.length > 0 || bracket || history.length > 0) {
       setCurrentStage('MAIN_MENU'); // Offer resume OR view history
     } else {
-      setCurrentStage('SETUP_NAME'); // Clean start
+      setCurrentStage('SETUP_PLAYERS'); // Clean start
     }
   }, []);
 
@@ -32,7 +32,7 @@ export function TournamentProvider({ children }) {
     setPlayers([]);
     setTeams([]);
     setBracket(null);
-    setCurrentStage(history.length > 0 ? 'MAIN_MENU' : 'SETUP_NAME');
+    setCurrentStage(history.length > 0 ? 'MAIN_MENU' : 'SETUP_PLAYERS');
   };
 
   const saveToHistory = (winnerTeam) => {
@@ -79,8 +79,7 @@ export function TournamentProvider({ children }) {
     if (stage === 'RESTORE_PREVIOUS') {
       if (bracket) setCurrentStage('BRACKET');
       else if (teams.length > 0) setCurrentStage('SETUP_TEAMS');
-      else if (players.length > 0) setCurrentStage('SETUP_PLAYERS');
-      else setCurrentStage('SETUP_NAME');
+      else setCurrentStage('SETUP_PLAYERS');
     } else {
       setCurrentStage(stage);
     }

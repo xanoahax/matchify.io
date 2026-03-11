@@ -54,7 +54,7 @@ export default function PlayerInput() {
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-        <button className="glass-button" onClick={() => advanceStage('SETUP_NAME')}>
+        <button className="glass-button" onClick={() => advanceStage('MAIN_MENU')}>
           Back
         </button>
         <button 

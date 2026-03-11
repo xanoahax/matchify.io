@@ -1,5 +1,4 @@
 import { useTournament } from './context/TournamentContext';
-import TournamentName from './components/Setup/TournamentName';
 import PlayerInput from './components/Setup/PlayerInput';
 import TeamManager from './components/Setup/TeamManager';
 import TournamentTree from './components/Bracket/TournamentTree';
@@ -14,8 +13,6 @@ function App() {
     switch (currentStage) {
       case 'MAIN_MENU':
         return <MainMenu />;
-      case 'SETUP_NAME':
-        return <TournamentName />;
       case 'SETUP_PLAYERS':
         return <PlayerInput />;
       case 'SETUP_TEAMS':
@@ -25,7 +22,7 @@ function App() {
       case 'CELEBRATION':
         return <Celebration />;
       default:
-        return <TournamentName />;
+        return <PlayerInput />;
     }
   };
 
@@ -39,7 +36,7 @@ function App() {
           Create and manage your custom tournaments with ease.
         </p>
         
-        {currentStage !== 'MAIN_MENU' && currentStage !== 'SETUP_NAME' && (
+        {currentStage !== 'MAIN_MENU' && (
           <button 
             onClick={() => {
               if(window.confirm('Are you sure you want to abandon this tournament? All progress will be lost.')) {
