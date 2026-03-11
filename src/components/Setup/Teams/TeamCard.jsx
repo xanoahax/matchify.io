@@ -12,12 +12,11 @@ export default function TeamCard({
   deleteTeam
 }) {
   return (
-    <div className="glass-panel" style={{ 
-      padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', 
+    <div className="glass-panel team-card" style={{ 
       background: isUneven ? 'rgba(255, 165, 0, 0.05)' : 'rgba(255,255,255,0.02)',
       borderColor: isUneven ? 'rgba(255, 165, 0, 0.4)' : 'var(--glass-border)'
     }}>
-      <div style={{ display: 'flex', gap: '8px' }}>
+      <div className="team-card-header">
         <select
           className="glass-input"
           style={{ width: '60px', padding: '8px', fontSize: '1.2rem', textAlign: 'center' }}
@@ -35,9 +34,9 @@ export default function TeamCard({
           style={{ flex: 1, padding: '8px', fontWeight: 'bold' }}
         />
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1 }}>
+      <div className="team-players-list">
         {team.players.map(p => (
-          <div key={p.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,0.05)', padding: '6px 10px', borderRadius: '6px' }}>
+          <div key={p.id} className="player-item">
              <span style={{ fontSize: '0.9rem' }}>{p.name}</span>
              {assignmentMode === 'manual' && (
                 <button onClick={() => removePlayerFromTeam(p.id, team.id)} style={{ background: 'none', border: 'none', color: 'var(--error-color, #ff4d4d)', cursor: 'pointer', fontSize: '1.2rem', padding: '0 4px' }}>&times;</button>
