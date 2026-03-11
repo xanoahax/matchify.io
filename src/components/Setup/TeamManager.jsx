@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useTournament } from '../../context/TournamentContext';
-
-const EMOJIS = ['🐺', '🦅', '🦁', '🐉', '🐍', '🦈', '☠️', '⚔️', '🛡️', '👑', '🔥', '⚡'];
+import TeamCard, { EMOJIS } from './Teams/TeamCard';
+import RandomMode from './Teams/RandomMode';
+import ManualMode from './Teams/ManualMode';
 
 export default function TeamManager() {
   const { players, teams, setTeams, generateBracket, advanceStage } = useTournament();
@@ -16,7 +17,6 @@ export default function TeamManager() {
   }, []);
 
   const handleGenerateRandomTeams = () => {
-    // Shuffle players
     const shuffled = [...players].sort(() => 0.5 - Math.random());
     const newTeams = [];
 
@@ -72,6 +72,10 @@ export default function TeamManager() {
     }));
   };
 
+  const deleteTeam = (teamId) => {
+    setTeams(teams.filter(t => t.id !== teamId));
+  };
+
   // Calculate unassigned players
   const assignedPlayerIds = new Set(teams.flatMap(t => t.players.map(p => p.id)));
   const unassignedPlayers = players.filter(p => !assignedPlayerIds.has(p.id));
@@ -81,9 +85,6 @@ export default function TeamManager() {
     setAssignmentMode(mode);
     if (mode === 'random') {
       handleGenerateRandomTeams();
-    } else {
-      // Clear teams when switching back to manual to avoid weird states, or leave them?
-      // Leaving them means they can start with random and tweak. That's a great feature actually!
     }
   };
 
@@ -105,125 +106,36 @@ export default function TeamManager() {
           </select>
         </div>
 
-        {assignmentMode === 'random' && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <label>Players per team:</label>
-            <input
-              type="number"
-              className="glass-input"
-              style={{ width: '60px', padding: '8px' }}
-              value={teamSize}
-              min={1}
-              onChange={(e) => setTeamSize(parseInt(e.target.value) || 1)}
-            />
-            <button className="glass-button secondary" onClick={handleGenerateRandomTeams} style={{ padding: '8px 16px' }}>
-              Regenerate
-            </button>
-          </div>
-        )}
+        <RandomMode 
+          assignmentMode={assignmentMode}
+          teamSize={teamSize}
+          setTeamSize={setTeamSize}
+          handleGenerateRandomTeams={handleGenerateRandomTeams}
+          teams={teams}
+        />
       </div>
 
-      {assignmentMode === 'random' && teams.some(t => t.players.length < teamSize) && (
-        <div style={{ 
-          background: 'rgba(255, 165, 0, 0.1)', 
-          border: '1px solid rgba(255, 165, 0, 0.3)', 
-          color: '#ffa500', 
-          padding: '12px 16px', 
-          borderRadius: '8px', 
-          marginBottom: '24px',
-          textAlign: 'center',
-          fontSize: '0.9rem'
-        }}>
-          ⚠️ <strong>Uneven teams:</strong> Some teams have fewer players.
-        </div>
-      )}
-
-      {assignmentMode === 'manual' && (
-        <div className="glass-panel" style={{ marginBottom: '24px', padding: '20px', background: 'rgba(0,0,0,0.2)' }}>
-          <h3 style={{ marginBottom: '12px', fontSize: '1.1rem' }}>Unassigned Players ({unassignedPlayers.length})</h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-             {unassignedPlayers.length === 0 ? (
-                 <span style={{ color: 'var(--text-muted)' }}>All players assigned!</span>
-             ) : (
-                 unassignedPlayers.map(p => (
-                     <div key={p.id} className="player-chip glass-panel" style={{ padding: '6px 12px', borderRadius: '20px', fontSize: '0.9rem' }}>
-                         {p.name}
-                     </div>
-                 ))
-             )}
-          </div>
-          <div style={{ marginTop: '16px', borderTop: '1px solid var(--glass-border)', paddingTop: '16px' }}>
-             <button className="glass-button secondary" onClick={handleAddManualTeam}>
-                 + Add Empty Team
-             </button>
-          </div>
-        </div>
-      )}
+      <ManualMode 
+        assignmentMode={assignmentMode}
+        unassignedPlayers={unassignedPlayers}
+        handleAddManualTeam={handleAddManualTeam}
+      />
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '16px', marginBottom: '24px', maxHeight: '400px', overflowY: 'auto' }}>
-        {teams.map((team, idx) => {
-          const isUneven = assignmentMode === 'random' && team.players.length < teamSize;
-          return (
-          <div key={team.id} className="glass-panel" style={{ 
-            padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', 
-            background: isUneven ? 'rgba(255, 165, 0, 0.05)' : 'rgba(255,255,255,0.02)',
-            borderColor: isUneven ? 'rgba(255, 165, 0, 0.4)' : 'var(--glass-border)'
-          }}>
-            <div style={{ display: 'flex', gap: '8px' }}>
-              <select
-                className="glass-input"
-                style={{ width: '60px', padding: '8px', fontSize: '1.2rem', textAlign: 'center' }}
-                value={team.emoji}
-                onChange={(e) => updateTeamEmoji(team.id, e.target.value)}
-              >
-                {EMOJIS.map(em => <option key={em} value={em}>{em}</option>)}
-              </select>
-              <input
-                type="text"
-                className="glass-input"
-                value={team.name}
-                placeholder={team.players.map(p => p.name).join(', ') || 'Team Name'}
-                onChange={(e) => updateTeamName(team.id, e.target.value)}
-                style={{ flex: 1, padding: '8px', fontWeight: 'bold' }}
-              />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1 }}>
-              {team.players.map(p => (
-                <div key={p.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,0.05)', padding: '6px 10px', borderRadius: '6px' }}>
-                   <span style={{ fontSize: '0.9rem' }}>{p.name}</span>
-                   {assignmentMode === 'manual' && (
-                      <button onClick={() => removePlayerFromTeam(p.id, team.id)} style={{ background: 'none', border: 'none', color: 'var(--error-color, #ff4d4d)', cursor: 'pointer', fontSize: '1.2rem', padding: '0 4px' }}>&times;</button>
-                   )}
-                </div>
-              ))}
-              {team.players.length === 0 && <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>Empty Team</div>}
-            </div>
-            {assignmentMode === 'manual' && unassignedPlayers.length > 0 && (
-                <div style={{ marginTop: 'auto' }}>
-                   <select 
-                       className="glass-input" 
-                       style={{ width: '100%', padding: '6px', fontSize: '0.85rem' }}
-                       value=""
-                       onChange={(e) => assignPlayerToTeam(e.target.value, team.id)}
-                   >
-                       <option value="" disabled>+ Assign Player</option>
-                       {unassignedPlayers.map(up => (
-                           <option key={up.id} value={up.id} style={{ color: 'black' }}>{up.name}</option>
-                       ))}
-                   </select>
-                </div>
-            )}
-            {isUneven && <div style={{ fontSize: '0.8rem', color: '#ffa500', marginTop: '4px' }}>⚠️ Missing player(s)</div>}
-            {assignmentMode === 'manual' && (
-                <button 
-                  onClick={() => setTeams(teams.filter(t => t.id !== team.id))}
-                  style={{ background: 'rgba(255,0,0,0.1)', color: '#ff4d4d', border: 'none', padding: '6px', borderRadius: '4px', cursor: 'pointer', marginTop: '4px' }}
-                >
-                    Delete Team
-                </button>
-            )}
-          </div>
-        )})}
+        {teams.map((team) => (
+          <TeamCard 
+            key={team.id}
+            team={team}
+            assignmentMode={assignmentMode}
+            isUneven={assignmentMode === 'random' && team.players.length < teamSize}
+            unassignedPlayers={unassignedPlayers}
+            updateTeamEmoji={updateTeamEmoji}
+            updateTeamName={updateTeamName}
+            removePlayerFromTeam={removePlayerFromTeam}
+            assignPlayerToTeam={assignPlayerToTeam}
+            deleteTeam={deleteTeam}
+          />
+        ))}
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px', alignItems: 'center' }}>
