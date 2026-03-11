@@ -41,15 +41,9 @@ export default function TournamentTree() {
                 <MatchNode
                   key={match.id}
                   match={match}
-                  onMatchClick={(e) => {
+                  onMatchClick={() => {
                     if (match.status === 'ACTIVE') {
                       setSelectedMatch(match);
-                      // On mobile devices, scrolling the clicked match to the center makes the modal feel more anchored.
-                      if (window.innerWidth <= 768 && e && e.currentTarget) {
-                         setTimeout(() => {
-                            e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                         }, 50);
-                      }
                     }
                   }}
                 />
