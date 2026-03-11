@@ -1,6 +1,6 @@
-# Matchify.io 🏆
+# PongBuddy 🏆
 
-Matchify.io is a modern, beautifully designed web application for creating and managing custom round-robin and knockout tournaments. With a focus on a glassmorphic, dark-mode aesthetic, Matchify abstracts the complexity of tournament brackets into a simple, interactive UI.
+PongBuddy is a modern, beautifully designed web application for creating and managing custom round-robin and knockout tournaments. With a focus on a glassmorphic, dark-mode aesthetic, PongBuddy abstracts the complexity of tournament brackets into a simple, interactive UI.
 
 ## Features ✨
 

@@ -39,7 +39,7 @@ function App() {
             style={{ cursor: 'pointer' }}
             title="Go to Start Screen"
           >
-            Matchify.io
+            PongBuddy
           </span>
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginTop: '8px' }}>

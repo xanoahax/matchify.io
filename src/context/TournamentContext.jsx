@@ -10,11 +10,11 @@ export function useTournament() {
 
 export function TournamentProvider({ children }) {
   // We use useLocalStorage for everything we want to persist
-  const [tournamentName, setTournamentName] = useLocalStorage('matchify_name', '');
-  const [players, setPlayers] = useLocalStorage('matchify_players', []);
-  const [teams, setTeams] = useLocalStorage('matchify_teams', []);
-  const [bracket, setBracket] = useLocalStorage('matchify_bracket', null);
-  const [history, setHistory] = useLocalStorage('matchify_history', []);
+  const [tournamentName, setTournamentName] = useLocalStorage('pongbuddy_name', '');
+  const [players, setPlayers] = useLocalStorage('pongbuddy_players', []);
+  const [teams, setTeams] = useLocalStorage('pongbuddy_teams', []);
+  const [bracket, setBracket] = useLocalStorage('pongbuddy_bracket', null);
+  const [history, setHistory] = useLocalStorage('pongbuddy_history', []);
   
   // Stages: 'MAIN_MENU' -> 'SETUP_NAME' -> 'SETUP_PLAYERS' -> 'SETUP_TEAMS' -> 'BRACKET' -> 'CELEBRATION'
   const [currentStage, setCurrentStage] = useState('MAIN_MENU');
