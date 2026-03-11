@@ -10,14 +10,6 @@ export default function TournamentName() {
     }
   };
 
-  const handleInputFocus = (e) => {
-    if (window.innerWidth <= 768 && e.target) {
-      setTimeout(() => {
-        e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 300); // Wait for mobile keyboard to appear
-    }
-  };
-
   return (
     <div className="glass-panel animate-fade-in" style={{ padding: '40px', width: '100%', maxWidth: '600px' }}>
       <h2 style={{ marginBottom: '24px', textAlign: 'center' }}>Create a Tournament</h2>
@@ -28,7 +20,6 @@ export default function TournamentName() {
           placeholder="Enter Tournament Name" 
           value={tournamentName}
           onChange={(e) => setTournamentName(e.target.value)}
-          onFocus={handleInputFocus}
           autoFocus
         />
         <button 
