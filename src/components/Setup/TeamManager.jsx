@@ -25,7 +25,7 @@ export default function TeamManager() {
       const randomEmoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
       newTeams.push({
         id: crypto.randomUUID(),
-        name: `Team ${newTeams.length + 1}`,
+        name: '',
         emoji: randomEmoji,
         players: teamPlayers
       });
@@ -114,6 +114,7 @@ export default function TeamManager() {
                 type="text"
                 className="glass-input"
                 value={team.name}
+                placeholder={team.players.map(p => p.name).join(', ')}
                 onChange={(e) => updateTeamName(team.id, e.target.value)}
                 style={{ flex: 1, padding: '8px', fontWeight: 'bold' }}
               />

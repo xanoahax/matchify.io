@@ -89,7 +89,9 @@ export function TournamentProvider({ children }) {
   const generateBracket = () => {
     let p = 1;
     while (p < teams.length) p *= 2;
-    const shuffledTeams = [...teams].sort(() => 0.5 - Math.random());
+    const shuffledTeams = [...teams]
+      .map(t => ({ ...t, name: t.name.trim() || t.players.map(p => p.name).join(', ') }))
+      .sort(() => 0.5 - Math.random());
     
     const newBracket = [];
     
