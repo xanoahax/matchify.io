@@ -44,7 +44,7 @@ export default function MatchNode({ match, onMatchClick }) {
         boxShadow: isClickable ? '0 0 15px rgba(255, 46, 147, 0.4)' : 'none',
         transform: isClickable ? 'scale(1.05)' : 'scale(1)'
       }}
-      onClick={onMatchClick ? onMatchClick : undefined}
+      onClick={(e) => onMatchClick ? onMatchClick(e) : undefined}
       title={onMatchClick ? 'View match details' : (isClickable ? 'Click to play match' : '')}
     >
       {renderTeam(match.team1, match.winnerId === match?.team1?.id)}
