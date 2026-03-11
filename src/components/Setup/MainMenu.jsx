@@ -3,16 +3,17 @@ import { useTournament } from '../../context/TournamentContext';
 import HistoryView from '../Bracket/HistoryView';
 
 export default function MainMenu() {
-  const { advanceStage, players, resetTournament, history, clearHistory } = useTournament();
+  const { advanceStage, tournamentName, players, resetTournament, history, clearHistory } = useTournament();
   const [selectedHistory, setSelectedHistory] = useState(null);
 
   const handleStartNew = () => {
     resetTournament();
-    advanceStage('SETUP_PLAYERS');
+    advanceStage('SETUP_NAME');
   };
 
   const handleContinue = () => {
-    if (players.length === 0) advanceStage('SETUP_PLAYERS');
+    if (!tournamentName) advanceStage('SETUP_NAME');
+    else if (players.length === 0) advanceStage('SETUP_PLAYERS');
     else advanceStage('RESTORE_PREVIOUS');
   };
 
@@ -20,7 +21,7 @@ export default function MainMenu() {
     return <HistoryView tournament={selectedHistory} onBack={() => setSelectedHistory(null)} />;
   }
 
-  const hasActiveUnfinished = players.length > 0;
+  const hasActiveUnfinished = tournamentName || players.length > 0;
 
   return (
     <div className="glass-panel animate-fade-in" style={{ padding: '40px', width: '100%', maxWidth: '600px', display: 'flex', flexDirection: 'column', gap: '40px' }}>
