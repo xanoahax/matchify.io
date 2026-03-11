@@ -22,11 +22,11 @@ export default function MatchModal({ match, onClose, isReadOnly = false }) {
       justifyContent: 'center',
       zIndex: 1000
     }}>
-      <div className="glass-panel animate-fade-in" style={{ padding: '40px', width: '100%', maxWidth: '500px', textAlign: 'center' }}>
+      <div className="glass-panel animate-fade-in" style={{ padding: '40px', width: '90%', maxWidth: '500px', textAlign: 'center' }}>
         <h2 style={{ marginBottom: '24px' }}>Resolve Match</h2>
         <p style={{ color: 'var(--text-muted)', marginBottom: '32px' }}>Who won?</p>
 
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '32px' }}>
+        <div className="mobile-flex-col" style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '32px' }}>
           {[match.team1, match.team2].map((team, idx) => {
             const isWinner = match.winnerId === team?.id;
             return (

@@ -91,7 +91,7 @@ export default function TeamManager() {
     <div className="glass-panel animate-fade-in" style={{ padding: '40px', width: '100%', maxWidth: '800px' }}>
       <h2 style={{ marginBottom: '16px', textAlign: 'center' }}>Form Teams</h2>
 
-      <div style={{ display: 'flex', gap: '20px', marginBottom: '24px', justifyContent: 'center' }}>
+      <div className="mobile-flex-col" style={{ display: 'flex', gap: '20px', marginBottom: '24px', justifyContent: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <label>Mode:</label>
           <select

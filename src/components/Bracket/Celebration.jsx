@@ -25,13 +25,13 @@ export default function Celebration() {
   if (!winnerTeam) return null; // Prevent crash when state clears
 
   return (
-    <div className="glass-panel animate-fade-in" style={{ padding: '60px', width: '100%', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-      <h1 className="text-gradient" style={{ fontSize: '4rem', marginBottom: '16px' }}>Tournament Complete!</h1>
+    <div className="glass-panel animate-fade-in" style={{ padding: '40px 20px', width: '100%', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+      <h1 className="text-gradient" style={{ fontSize: 'clamp(2.5rem, 8vw, 4rem)', marginBottom: '16px' }}>Tournament Complete!</h1>
       <h2 style={{ color: 'var(--text-muted)', marginBottom: '40px' }}>The Champion is</h2>
 
       <div style={{ animation: 'fadeIn 1s ease-out forwards', transform: 'scale(1.2)' }}>
-        {winnerTeam?.emoji && <div style={{ fontSize: '5rem', marginBottom: '16px' }}>{winnerTeam.emoji}</div>}
-        <div style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>{winnerTeam?.name}</div>
+        {winnerTeam?.emoji && <div style={{ fontSize: '4rem', marginBottom: '16px' }}>{winnerTeam.emoji}</div>}
+        <div style={{ fontSize: 'clamp(1.5rem, 6vw, 2.5rem)', fontWeight: 'bold' }}>{winnerTeam?.name}</div>
       </div>
 
       <div style={{ marginTop: '60px' }}>

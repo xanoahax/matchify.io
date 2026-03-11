@@ -201,7 +201,7 @@ input {
   color: var(--accent-secondary);
 }
 
-/* Mobile Responsive Bracket: Top-to-Bottom Layout */
+/* Mobile Responsive Typography & Layouts */
 @media (max-width: 768px) {
   .bracket-container {
     flex-direction: column;
@@ -219,5 +219,40 @@ input {
   .round-title {
     width: 100%;
     margin-bottom: 10px;
+  }
+
+  .app-container {
+    padding: 20px 10px;
+  }
+
+  .header {
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-size: 2rem !important;
+  }
+
+  .header p {
+    font-size: 0.9rem !important;
+  }
+
+  .header .glass-button {
+    position: static !important;
+    margin-top: 15px;
+    width: 100%;
+  }
+
+  /* Form and Modal overrides */
+  .mobile-flex-col {
+    flex-direction: column !important;
+  }
+
+  .glass-panel {
+    padding: 20px !important;
+  }
+  
+  h2 {
+    font-size: 1.5rem !important;
   }
 }
