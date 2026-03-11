@@ -8,7 +8,7 @@ import Celebration from './components/Bracket/Celebration';
 import MainMenu from './components/Setup/MainMenu';
 
 function App() {
-  const { currentStage, resetTournament } = useTournament();
+  const { currentStage, resetTournament, advanceStage } = useTournament();
 
   const renderStage = () => {
     switch (currentStage) {
@@ -33,7 +33,14 @@ function App() {
     <div className="app-container">
       <header className="header animate-fade-in" style={{ position: 'relative' }}>
         <h1 style={{ fontSize: '3rem' }}>
-          Welcome to <span className="text-gradient">Matchify.io</span>
+          Welcome to <span 
+            className="text-gradient" 
+            onClick={() => advanceStage('MAIN_MENU')} 
+            style={{ cursor: 'pointer' }}
+            title="Go to Start Screen"
+          >
+            Matchify.io
+          </span>
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginTop: '8px' }}>
           Create and manage your custom tournaments with ease.
