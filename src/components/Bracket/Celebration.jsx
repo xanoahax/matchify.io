@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTournament } from '../../context/TournamentContext';
 
 export default function Celebration() {
-  const { bracket, saveToHistory } = useTournament();
+  const { bracket, saveToHistory, advanceStage } = useTournament();
   const hasSaved = useRef(false);
 
   // We freeze the winner in local state so the celebration screen doesn't disappear 
@@ -37,10 +37,10 @@ export default function Celebration() {
       <div style={{ marginTop: '60px' }}>
         <button
           className="glass-button primary"
-          onClick={() => window.location.reload()}
+          onClick={() => advanceStage('MAIN_MENU')}
           style={{ padding: '16px 32px', fontSize: '1.2rem' }}
         >
-          Start New Tournament
+          Finish
         </button>
       </div>
     </div>
